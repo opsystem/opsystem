@@ -13,9 +13,7 @@
 <body>
 <?php include'menu.php'?>
 <style>
-    .div.body{
-        background-image: url("img/4.jpg");
-    }
+
     div.img {
         border: 1px solid #ccc;
     }
