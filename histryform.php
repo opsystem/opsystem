@@ -13,12 +13,57 @@
 <?php include'menu.php'?>
 <div class="container">
     <!-- Content here -->
-<body>
+<?php
+include 'connect.php';
+// define variables and set to empty values
+$fullnameErr = $ageErr = "";
+$fullname =  $age = $history= "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["fullname"])) {
+        $fulltnameErr = "fullname is required";
+    } else {
+        $firstname = ($_POST["fullname"]);
+        // check if name only contains letters and whitespace
+        if (!preg_match("/^[a-zA-Z ]*$/",$fullnameErr)) {
+            $fullnameErr = "Only letter are allowed";
+        }
+    }
+    if (empty($_POST["age"])) {
+        $ageErr = "age is required";
+    } else {
+        $age = ($_POST["age"]);
+        // check if e-mail address is well-formed
+        if (!preg_match("/^[0-9]*$/",$ageErr)) {
+            $ageErr = "Invalid age";
+        }
+    }
+}
+$fullname = filter_input(INPUT_POST, 'fullname');
+$age= filter_input(INPUT_POST, 'age');
+$medicine= filter_input(INPUT_POST, 'history');
+$sql = "INSERT INTO doctor (fullname, age, history)
+VALUES ('$fullname', '$age', '$history')";
+$conn->exec($sql);
+echo "New record created successfully";
+?>
 <h1>PATIENT FORM</h1>
-<form>
+    <form method="POST">
+        <div class="form-group row">
+            <label for="fname" class="col-sm-1 col-form-label">Full name</label>
+            <div class="col-sm-6">
+                <input type="text" name="fname" class="form-control" id="fname"  placeholder="Enter firstname" required="">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="age" class="col-sm-1 col-form-label">Age</label>
+            <div class="col-sm-6">
+                <input type="text" name="age" class="form-control" id="Age" placeholder="Enter the age" required="">
+            </div>
+        </div>
     <div class="form-group">
         <label for="exampleFormControlTextarea1">Patient's history</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="8"></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" required=""></textarea>
     </div>
     <button type="button" class="btn btn-primary btn-lg">SAVE</button>
 

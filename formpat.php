@@ -1,54 +1,40 @@
-<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-        <title>pform</title>
-        <style>
-            .error {color: #FF0000;}
-        </style>
-    </head>
-    <body bgcolor="#ffe4c4">
-
-    <?php include'menu.php'?>
-    <div class="container">
-        <!-- Content here -->
-        <?php
-        // define variables and set to empty values
-        $fnameErr = $mnameErr =  $lnameErr = $ageErr =  $residenceErr = $phonenoErr = $genderErr = "";
-        $fname = $mname =  $lname = $age =  $residence = $phoneno = $gender = "";
-
+<?php
+    include 'connect.php';
+     // define variables and set to empty values
+        $firstnameErr = $middlenameErr =  $lastnameErr = $ageErr =  $residenceErr = $phonenoErr = $genderErr = "";
+        $firstname = $middlename =  $lastname = $age =  $residence = $phoneno = $gender = "";
+ function test_input($data) {
+     $data = trim($data);
+     $data = stripslashes($data);
+     $data = htmlspecialchars($data);
+     return $data;
+ }
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (empty($_POST["fname"])) {
-                $fnameErr = "firstname is required";
+            if (empty($_POST["firstname"])) {
+                $firstnameErr = "firstname is required";
             } else {
-                $fname = test_input($_POST["fname"]);
+                $firstname = test_input($_POST["firstname"]);
                 // check if name only contains letters and whitespace
-                if (!preg_match("/^[a-zA-Z ]*$/",$fnameErr)) {
-                    $fnameErr = "Only letter are allowed";
+                if (!preg_match("/^[a-zA-Z ]*$/",$firstnameErr)) {
+                    $firstnameErr = "Only letter are allowed";
                 }
             }
-            if (empty($_POST["mname"])) {
-                $mnameErr = "Name is required";
+            if (empty($_POST["middlename"])) {
+                $middlenameErr = "Name is required";
             } else {
-                $mname = test_input($_POST["mname"]);
+                $middlename = test_input($_POST["middlename"]);
                 // check if name only contains letters and whitespace
-                if (!preg_match("/^[a-zA-Z ]*$/",$_POST["mname"])) {
-                    $mnameErr = "Only letters allowed";
+                if (!preg_match("/^[a-zA-Z ]*$/",$_POST["middlename"])) {
+                    $middlenameErr = "Only letters allowed";
                 }
             }
-            if (empty($_POST["lname"])) {
-                $lnameErr = "Name is required";
+            if (empty($_POST["lastname"])) {
+                $lastnameErr = "Name is required";
             } else {
-                $lname = test_input($_POST["lname"]);
+                $lastname = test_input($_POST["lastname"]);
                 // check if name only contains letters and whitespace
-                if (!preg_match("/^[a-zA-Z ]*$/",$lnameErr)) {
-                    $lnameErr = "Only letters allowed";
+                if (!preg_match("/^[a-zA-Z ]*$/",$lastnameErr)) {
+                    $lastnameErr = "Only letters allowed";
                 }
             }
             if (empty($_POST["age"])) {
@@ -69,81 +55,108 @@
                     $residenceErr = "Only letters allowed";
                 }
             }
-                $phoneno = test_input($_POST["phoneno"]);
-                // check if phone no is well-formed
-                if (!preg_match("/^[06,07 ]*$/",$phonenoErr)) {
-                    $phonenoErr = "Invalid phone no format";
-                }
+            $phoneno = test_input($_POST["phoneno"]);
+            // check if phone no is well-formed
+            if (!preg_match("/^[06,07 ]*$/",$phonenoErr)) {
+                $phonenoErr = "Invalid phone no format";
             }
             if (empty($_POST["gender"])) {
                 $genderErr = "Gender is required";
             } else {
                 $gender = test_input($_POST["gender"]);
             }
-        function test_input($data) {
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
+            $firstname = filter_input(INPUT_POST, 'firstname');
+            $middlename = filter_input(INPUT_POST, 'middlename');
+            $lastname = filter_input(INPUT_POST, 'lastname');
+            $age= filter_input(INPUT_POST, 'age');
+            $residence = filter_input(INPUT_POST, 'residence');
+            $phoneno = filter_input(INPUT_POST, 'phoneno');
+            $gender = filter_input(INPUT_POST, 'gender');
+            $sql = "INSERT INTO patient (firstname, middlename, lastname, age, residence, phoneno, gender)
+                    VALUES ('$firstname', '$middlename', '$lastname', '$age', '$residence', '$phoneno', '$gender')";
+            $conn->exec($sql);
+            echo "New record created successfully";
         }
-        ?>
+?>
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <title>pform</title>
+        <style>
+            .error {color: #ffe976;}
+        </style>
+    </head>
+    <body class="bg-gradient-primary">
+    <?php include'menu.php'?>
+    <div class="container">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+               <!-- <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">-->
+
+    <div class="container">
+        <!-- Content here -->
+
         <h1>PATIENT REGISTRATION FORM</h1>
-        <p><span class="error">* required field.</span></p>
-    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+    <form method="POST">
         <div class="form-group row">
-            <label for="fname" class="col-sm-2 col-form-label">First name</label>
-            <div class="col-sm-8">
-                <input type="text" name="fname" class="form-control" id="fname"  placeholder="Enter firstname" value="<?php echo $fname;?>" required="">
-                <span class="error">* <?php echo $fnameErr;?></span>
+            <label for="firstname" class="col-sm-2 col-form-label">First name</label>
+            <div class="col-sm-6">
+                <input type="text" name="firstname" class="form-control" id="firstname"  placeholder="Enter firstname" required="">
             </div>
         </div>
         <div class="form-group row">
-            <label for="mname" class="col-sm-2 col-form-label">Middle name</label>
-            <div class="col-sm-8">
-                <input type="text" name="mname" class="form-control" id="mname" placeholder="Enter middle name" value="<?php echo $mname;?>">
-                <span class="error">* <?php echo $mnameErr;?></span>
+            <label for="middlename" class="col-sm-2 col-form-label">Middle name</label>
+            <div class="col-sm-6">
+                <input type="text" name="middlename" class="form-control" id="middlename" placeholder="Enter middle name" required="">
             </div>
         </div>
         <div class="form-group row">
-            <label for="lname" class="col-sm-2 col-form-label">Lastname</label>
-            <div class="col-sm-8">
-                <input type="text" name="lname" class="form-control" id="lname" placeholder="Enter last name" value="<?php echo $lname;?>">
-                <span class="error">* <?php echo $lnameErr;?></span>
+            <label for="lastname" class="col-sm-2 col-form-label">Lastname</label>
+            <div class="col-sm-6">
+                <input type="text" name="lastname" class="form-control" id="lastname" placeholder="Enter last name" required="">
             </div>
         </div>
         <div class="form-group row">
             <label for="age" class="col-sm-2 col-form-label">Age</label>
-            <div class="col-sm-8">
-                <input type="text" name="age" class="form-control" id="Age" placeholder="Enter the age" value="<?php echo $age;?>">
-                <span class="error">* <?php echo $ageErr;?></span>
+            <div class="col-sm-6">
+                <input type="text" name="age" class="form-control" id="Age" placeholder="Enter the age" required="">
             </div>
         </div>
         <div class="form-group row">
             <label for="recidence" class="col-sm-2 col-form-label">Residence</label>
-            <div class="col-sm-8">
-                <input type="text" name="residence" class="form-control" id="residence" placeholder="enter resident" value="<?php echo $residence;?>">
-                <span class="error">* <?php echo $residenceErr;?></span>
+            <div class="col-sm-6">
+                <input type="text" name="residence" class="form-control" id="residence" placeholder="enter resident"  required="">
             </div>
         </div>
         <div class="form-group row">
             <label for="phoneno" class="col-sm-2 col-form-label">phone number</label>
-            <div class="col-sm-8">
-                <input type="phoneno" name="phoneno" class="form-control" id="phoneno" placeholder="Enter the phone number" value="<?php echo $phoneno;?>">
-                <span class="error">* <?php echo $phonenoErr;?></span>
+            <div class="col-sm-6">
+                <input type="phoneno" name="phoneno" class="form-control" id="phoneno" placeholder="Enter the phone number">
             </div>
         </div>
         <fieldset class="form-group">
             <div class="row">
                 <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="gridRadios1" checked <?php if (isset($gender) && $gender=="male") echo "checked";?> value="male">
+                        <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="male">
                         <label class="form-check-label" for="gridRadios1">
                             Male
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="gridRadios2" <?php if (isset($gender) && $gender=="female") echo "checked";?> value="female">
+                        <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female">
                         <label class="form-check-label" for="gridRadios2">
                             Female
                         </label>
@@ -153,31 +166,13 @@
         </fieldset>
         <center>
         <div class="form-group row">
-            <div class="col-sm-14">
-              <button type="submit" class="btn btn-primary">SUBMIT</button>
-            </div>
+                <div class="col-sm-24">
+                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                </div>
         </div>
             </center>
     </div>
     </form>
-
-    <?php
-    echo "<h2>Your Input:</h2>";
-    echo $fname;
-    echo "<br>";
-    echo $mname;
-    echo "<br>";
-    echo $lname;
-    echo "<br>";
-    echo $age;
-    echo "<br>";
-    echo $residence;
-    echo "<br>";
-    echo $phoneno;
-    echo "<br>";
-    echo $gender;
-    ?>
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

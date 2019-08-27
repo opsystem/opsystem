@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -12,6 +12,16 @@
 </head>
 <body>
 <?php include'menu.php'?>
+<div class="banner">
+    <div class=" d-flex justify-content-between align-items-center px-1 py-0 container">
+        <div class="p-0">
+            <img src="9.png" alt="emblem" width="60" class="img-fluid ">
+        </div>
+        <center>
+            <marquee style="color:#000000" font-size:"larger"><b><b><b>THE UNITED REPUBLIC OF TANZANIA&nbsp&nbsp&nbsp&nbsp&nbsp********&nbsp&nbsp&nbspMINISTRY OF HEALTH&nbsp&nbsp&nbsp&nbsp*******&nbspTHE UNITED REPUBLIC OF TANZANIA</marquee></b></b></b>
+        </div>
+</center>
+
 <style>
 
     div.img {
@@ -63,15 +73,13 @@
 </style>
 </head>
 <body style="background-image: url("5.jpg")">
-<div class="responsive">
+    <div class="responsive">
     <div class="img">
         <a target="_blank" href="7.jpg">
             <img src="img/7.jpg" alt="Trolltunga Norway" width="300" height="200">
         </a>
     </div>
 </div>
-
-
 <div class="responsive">
     <div class="img">
         <a target="_blank" href="2.jpg">
@@ -102,15 +110,18 @@
 </br>
 <br>
 </br>
-
+<br></br>
+<br></br>
 <center>
 <div class="text-blue">
     <h1>OUTPATIENT HEALTH CARE SYSTEM</h1>
     <h3> We Provide Better Health care service for patient </h3>
-    <button type="submit" class="btn btn-primary btn-lg"><a href="login%20form.php">LOGIN</a> LOGIN</button>
+    <button type="submit" class="btn btn-secondary btn-lg"><a href="login.php">LOGIN</a></button>
+
 </div>
 </center>
 </div>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

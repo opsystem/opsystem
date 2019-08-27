@@ -10,6 +10,50 @@
     <title>reset</title>
 </head>
 <?php include'menu.php'?>
+<style type="text/css">
+    html {
+        background-image: none;
+    }
+    #versionBar {
+        background-color:#212121;
+        position:center;
+        width:100%;
+        height:35px;
+        bottom:0;
+        left:0;
+        text-align:center;
+        line-height:35px;
+    }
+    .copyright{
+        text-align:center; font-size:10px; color:#CCC;
+    }
+    .copyright a{
+        color:#A31F1A; text-decoration:none
+    }
+</style>
+<script type="text/javascript" >
+    function validateForm()
+    {
+        var x=document.forms["loginForm"]["username"].value
+        var y=document.forms["loginForm"]["password"].value
+        if ((x==null || x=="") && (y==null || y==""))
+        {
+            alert("Username and Password must be filled out");
+            return false;
+        }
+        else if(x==null || x=="")
+        {
+            alert("Username must be filled out");
+            return false;
+        }
+        else if(y==null || y=="")
+        {
+            alert("Password must be filled out");
+            return false;
+        }
+    }
+
+</script>
 <body>
 <center>
 <div class="container">
@@ -20,13 +64,16 @@
     <form>
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="nyau@email.com">
+            <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp"  placeholder="nyau@email.com">
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <button type="button" class="btn btn-primary btn-lg">RESET</button>
     </form>
 </center>
     </div>
+
+<!-- Link JScript-->
+<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

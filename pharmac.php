@@ -1,3 +1,43 @@
+<?php
+include 'connect.php';
+// define variables and set to empty values
+$fullnameErr = $ageErr = "";
+$fullname =  $age = $medicine= "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["fullname"])) {
+        $fulltnameErr = "fullname is required";
+    } else {
+        $firstname = ($_POST["fullname"]);
+        // check if name only contains letters and whitespace
+        if (!preg_match("/^[a-zA-Z ]*$/",$fullnameErr)) {
+            $fullnameErr = "Only letter are allowed";
+        }
+    }
+    if (empty($_POST["age"])) {
+        $ageErr = "age is required";
+    } else {
+        $age = ($_POST["age"]);
+        // check if e-mail address is well-formed
+        if (!preg_match("/^[1-200 ]*$/",$ageErr)) {
+            $ageErr = "Invalid age";
+        }
+    }
+}
+/*function ($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}*/
+$fullname = filter_input(INPUT_POST, 'fullname');
+$age= filter_input(INPUT_POST, 'age');
+$medicine= filter_input(INPUT_POST, 'medicine');
+$sql = "INSERT INTO pharmacy (fullname, age, medicine)
+VALUES ('$fullname', '$age', '$medicine')";
+$conn->exec($sql);
+echo "New record created successfully";
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -14,17 +54,17 @@
 <body>
 <div class="container">
     <h1>MEDICINE PRESCRIPTION FORM</h1>
-    <form>
+    <form method="post">
         <div class="form-group row">
-            <label for="inputfname" class="col-sm-2 col-form-label">Fullname</label>
+            <label for="inputfname" class="col-sm-1 col-form-label">Fullname</label>
             <div class="col-sm-8">
-                <input type="fname" class="form-control" id="inputfname" placeholder="Enter firstname">
+                <input type="fname" class="form-control" id="inputfname" placeholder="Enter firstname" required="">
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputage" class="col-sm-2 col-form-label">Age</label>
+            <label for="inputage" class="col-sm-1 col-form-label">Age</label>
             <div class="col-sm-8">
-                <input type="age" class="form-control" id="inputAge" placeholder="Enter the age">
+                <input type="age" class="form-control" id="inputAge" placeholder="Enter the age" required="">
             </div>
         </div>
         <div class="form-group">
@@ -32,7 +72,7 @@
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
         </div>
         <button type="button" class="btn btn-primary btn-lg">SUBMIT</button>
-</form>>
+</form>
         <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
