@@ -43,6 +43,9 @@
                 <a class="nav-link" href="pharmac.php">Pharmacist</a>
             </li>
         </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <a href="logout.php" class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</a>
+        </form>
     </div>
 </nav>
     </header>

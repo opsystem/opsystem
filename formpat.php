@@ -1,82 +1,90 @@
 <?php
-    include 'connect.php';
-     // define variables and set to empty values
-        $firstnameErr = $middlenameErr =  $lastnameErr = $ageErr =  $residenceErr = $phonenoErr = $genderErr = "";
-        $firstname = $middlename =  $lastname = $age =  $residence = $phoneno = $gender = "";
- function test_input($data) {
-     $data = trim($data);
-     $data = stripslashes($data);
-     $data = htmlspecialchars($data);
-     return $data;
- }
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (empty($_POST["firstname"])) {
-                $firstnameErr = "firstname is required";
-            } else {
-                $firstname = test_input($_POST["firstname"]);
-                // check if name only contains letters and whitespace
-                if (!preg_match("/^[a-zA-Z ]*$/",$firstnameErr)) {
-                    $firstnameErr = "Only letter are allowed";
-                }
+require_once 'connect.php';
+//initiate the class
+$user = new connect();
+if($user->isLogin()) {
+    // define variables and set to empty values
+    $firstnameErr = $middlenameErr = $lastnameErr = $ageErr = $residenceErr = $phonenoErr = $genderErr = "";
+    $firstname = $middlename = $lastname = $age = $residence = $phoneno = $gender = "";
+    function test_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (empty($_POST["firstname"])) {
+            $firstnameErr = "firstname is required";
+        } else {
+            $firstname = test_input($_POST["firstname"]);
+            // check if name only contains letters and whitespace
+            if (!preg_match("/^[a-zA-Z ]*$/", $firstnameErr)) {
+                $firstnameErr = "Only letter are allowed";
             }
-            if (empty($_POST["middlename"])) {
-                $middlenameErr = "Name is required";
-            } else {
-                $middlename = test_input($_POST["middlename"]);
-                // check if name only contains letters and whitespace
-                if (!preg_match("/^[a-zA-Z ]*$/",$_POST["middlename"])) {
-                    $middlenameErr = "Only letters allowed";
-                }
-            }
-            if (empty($_POST["lastname"])) {
-                $lastnameErr = "Name is required";
-            } else {
-                $lastname = test_input($_POST["lastname"]);
-                // check if name only contains letters and whitespace
-                if (!preg_match("/^[a-zA-Z ]*$/",$lastnameErr)) {
-                    $lastnameErr = "Only letters allowed";
-                }
-            }
-            if (empty($_POST["age"])) {
-                $ageErr = "age is required";
-            } else {
-                $age = test_input($_POST["age"]);
-                // check if e-mail address is well-formed
-                if (!preg_match("/^[1-200 ]*$/",$ageErr)) {
-                    $ageErr = "Invalid age";
-                }
-            }
-            if (empty($_POST["residence"])) {
-                $residenceErr = "residence is required";
-            } else {
-                $residence = test_input($_POST["residence"]);
-                // check if name only contains letters and whitespace
-                if (!preg_match("/^[a-zA-Z ]*$/",$residenceErr)) {
-                    $residenceErr = "Only letters allowed";
-                }
-            }
-            $phoneno = test_input($_POST["phoneno"]);
-            // check if phone no is well-formed
-            if (!preg_match("/^[06,07 ]*$/",$phonenoErr)) {
-                $phonenoErr = "Invalid phone no format";
-            }
-            if (empty($_POST["gender"])) {
-                $genderErr = "Gender is required";
-            } else {
-                $gender = test_input($_POST["gender"]);
-            }
-            $firstname = filter_input(INPUT_POST, 'firstname');
-            $middlename = filter_input(INPUT_POST, 'middlename');
-            $lastname = filter_input(INPUT_POST, 'lastname');
-            $age= filter_input(INPUT_POST, 'age');
-            $residence = filter_input(INPUT_POST, 'residence');
-            $phoneno = filter_input(INPUT_POST, 'phoneno');
-            $gender = filter_input(INPUT_POST, 'gender');
-            $sql = "INSERT INTO patient (firstname, middlename, lastname, age, residence, phoneno, gender)
-                    VALUES ('$firstname', '$middlename', '$lastname', '$age', '$residence', '$phoneno', '$gender')";
-            $conn->exec($sql);
-            echo "New record created successfully";
         }
+        if (empty($_POST["middlename"])) {
+            $middlenameErr = "Name is required";
+        } else {
+            $middlename = test_input($_POST["middlename"]);
+            // check if name only contains letters and whitespace
+            if (!preg_match("/^[a-zA-Z ]*$/", $_POST["middlename"])) {
+                $middlenameErr = "Only letters allowed";
+            }
+        }
+        if (empty($_POST["lastname"])) {
+            $lastnameErr = "Name is required";
+        } else {
+            $lastname = test_input($_POST["lastname"]);
+            // check if name only contains letters and whitespace
+            if (!preg_match("/^[a-zA-Z ]*$/", $lastnameErr)) {
+                $lastnameErr = "Only letters allowed";
+            }
+        }
+        if (empty($_POST["age"])) {
+            $ageErr = "age is required";
+        } else {
+            $age = test_input($_POST["age"]);
+            // check if e-mail address is well-formed
+            if (!preg_match("/^[1-200 ]*$/", $ageErr)) {
+                $ageErr = "Invalid age";
+            }
+        }
+        if (empty($_POST["residence"])) {
+            $residenceErr = "residence is required";
+        } else {
+            $residence = test_input($_POST["residence"]);
+            // check if name only contains letters and whitespace
+            if (!preg_match("/^[a-zA-Z ]*$/", $residenceErr)) {
+                $residenceErr = "Only letters allowed";
+            }
+        }
+        $phoneno = test_input($_POST["phoneno"]);
+        // check if phone no is well-formed
+        if (!preg_match("/^[06,07 ]*$/", $phonenoErr)) {
+            $phonenoErr = "Invalid phone no format";
+        }
+        if (empty($_POST["gender"])) {
+            $genderErr = "Gender is required";
+        } else {
+            $gender = test_input($_POST["gender"]);
+        }
+        $firstname = filter_input(INPUT_POST, 'firstname');
+        $middlename = filter_input(INPUT_POST, 'middlename');
+        $lastname = filter_input(INPUT_POST, 'lastname');
+        $age = filter_input(INPUT_POST, 'age');
+        $residence = filter_input(INPUT_POST, 'residence');
+        $phoneno = filter_input(INPUT_POST, 'phoneno');
+        $gender = filter_input(INPUT_POST, 'gender');
+        $sql = "INSERT INTO patient (firstname, middlename, lastname, age, residence, phoneno, gender)
+                    VALUES ('$firstname', '$middlename', '$lastname', '$age', '$residence', '$phoneno', '$gender')";
+        $conn->exec($sql);
+        echo "New record created successfully";
+    }
+}else{
+    $user->redirect('login.php');
+}
 ?>
 <!DOCTYPE html>
     <html lang="en">
@@ -172,7 +180,7 @@
         </div>
             </center>
     </div>
-    </form>
+                </form></div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

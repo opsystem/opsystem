@@ -1,46 +1,52 @@
 <?php
-include 'connect.php';
+require_once 'connect.php';
+//initiate the class
+$user = new connect();
+if($user->isLogin()) {
 // define variables and set to empty values
-$nameErr = $ageErr= "";
-$name = $age =  $malaria = $typhoid =  $uti = $tuberculosis = $HIV = "";
+    $nameErr = $ageErr = "";
+    $name = $age = $malaria = $typhoid = $uti = $tuberculosis = $HIV = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST["name"])) {
-        $nameErr = "name is required";
-    } else {
-        $name = test_input($_POST["name"]);
-        // check if name only contains letters and whitespace
-        if (!preg_match("/^[a-zA-Z ]*$/",$nameErr)) {
-            $nameErr = "Only letter are allowed";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (empty($_POST["name"])) {
+            $nameErr = "name is required";
+        } else {
+            $name = test_input($_POST["name"]);
+            // check if name only contains letters and whitespace
+            if (!preg_match("/^[a-zA-Z ]*$/", $nameErr)) {
+                $nameErr = "Only letter are allowed";
+            }
         }
-    }
 
-    if (empty($_POST["age"])) {
-        $ageErr = "age is required";
-    } else {
-        $age = test_input($_POST["age"]);
-        // check if e-mail address is well-formed
-        if (!preg_match("/^[1-200 ]*$/",$ageErr)) {
-            $ageErr = "Invalid age";
+        if (empty($_POST["age"])) {
+            $ageErr = "age is required";
+        } else {
+            $age = test_input($_POST["age"]);
+            // check if e-mail address is well-formed
+            if (!preg_match("/^[1-200 ]*$/", $ageErr)) {
+                $ageErr = "Invalid age";
+            }
         }
+        /*function test_input($data) {
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;*/
     }
-/*function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;*/
-}
-$name = filter_input(INPUT_POST, 'name');
-$age = filter_input(INPUT_POST, 'age');
-$malaria = filter_input(INPUT_POST, 'malaria');
-$typhoid = filter_input(INPUT_POST, 'typhoid');
-$uti = filter_input(INPUT_POST, 'uti');
-$tuberculosis = filter_input(INPUT_POST, 'tuberculosis');
-$HIV = filter_input(INPUT_POST, 'HIV');
-$sql = "INSERT INTO patient (name,age, malaria, typhoid, uti, tuberculosis, HIV)
+    $name = filter_input(INPUT_POST, 'name');
+    $age = filter_input(INPUT_POST, 'age');
+    $malaria = filter_input(INPUT_POST, 'malaria');
+    $typhoid = filter_input(INPUT_POST, 'typhoid');
+    $uti = filter_input(INPUT_POST, 'uti');
+    $tuberculosis = filter_input(INPUT_POST, 'tuberculosis');
+    $HIV = filter_input(INPUT_POST, 'HIV');
+    $sql = "INSERT INTO patient (name,age, malaria, typhoid, uti, tuberculosis, HIV)
 VALUES ('$name','$age', '$malaria', '$typhoid', '$uti', '$tuberculosis','HIV')";
-$conn->exec($sql);
-echo "New record created successfully";
+    $conn->exec($sql);
+    echo "New record created successfully";
+}else{
+    $user->redirect('login.php');
+}
 ?>
 <!doctype html>
 <html lang="en">

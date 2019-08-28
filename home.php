@@ -1,3 +1,14 @@
+<?php
+require_once 'connect.php';
+$user = new connect();
+
+//check if user login or not
+if($user->isLogin()){
+
+}else{
+    $user->redirect('login.php');
+}
+?>
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>

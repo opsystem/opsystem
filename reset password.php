@@ -1,3 +1,13 @@
+<?php
+require_once 'connect.php';
+//initiate the class
+$user = new connect();
+if($user->isLogin()){
+
+}else{
+    $user->redirect('login.php');
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>

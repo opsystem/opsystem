@@ -1,42 +1,49 @@
 <?php
-include 'connect.php';
+require_once 'connect.php';
+//initiate the class
+$user = new connect();
+if($user->isLogin()) {
+//include 'connect.php';
 // define variables and set to empty values
-$fullnameErr = $ageErr = "";
-$fullname =  $age = $medicine= "";
+    $fullnameErr = $ageErr = "";
+    $fullname = $age = $medicine = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST["fullname"])) {
-        $fulltnameErr = "fullname is required";
-    } else {
-        $firstname = ($_POST["fullname"]);
-        // check if name only contains letters and whitespace
-        if (!preg_match("/^[a-zA-Z ]*$/",$fullnameErr)) {
-            $fullnameErr = "Only letter are allowed";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (empty($_POST["fullname"])) {
+            $fulltnameErr = "fullname is required";
+        } else {
+            $firstname = ($_POST["fullname"]);
+            // check if name only contains letters and whitespace
+            if (!preg_match("/^[a-zA-Z ]*$/", $fullnameErr)) {
+                $fullnameErr = "Only letter are allowed";
+            }
+        }
+        if (empty($_POST["age"])) {
+            $ageErr = "age is required";
+        } else {
+            $age = ($_POST["age"]);
+            // check if e-mail address is well-formed
+            if (!preg_match("/^[1-200 ]*$/", $ageErr)) {
+                $ageErr = "Invalid age";
+            }
         }
     }
-    if (empty($_POST["age"])) {
-        $ageErr = "age is required";
-    } else {
-        $age = ($_POST["age"]);
-        // check if e-mail address is well-formed
-        if (!preg_match("/^[1-200 ]*$/",$ageErr)) {
-            $ageErr = "Invalid age";
-        }
-    }
-}
-/*function ($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}*/
-$fullname = filter_input(INPUT_POST, 'fullname');
-$age= filter_input(INPUT_POST, 'age');
-$medicine= filter_input(INPUT_POST, 'medicine');
-$sql = "INSERT INTO pharmacy (fullname, age, medicine)
+    /*function ($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }*/
+    $fullname = filter_input(INPUT_POST, 'fullname');
+    $age = filter_input(INPUT_POST, 'age');
+    $medicine = filter_input(INPUT_POST, 'medicine');
+    $sql = "INSERT INTO pharmacy (fullname, age, medicine)
 VALUES ('$fullname', '$age', '$medicine')";
-$conn->exec($sql);
-echo "New record created successfully";
+    $conn->exec($sql);
+    echo "New record created successfully";
+}else{
+    $user->redirect('login.php');
+}
 ?>
 <!doctype html>
 <html lang="en">
